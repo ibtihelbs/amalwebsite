@@ -27,33 +27,31 @@ const Header = () => {
   const {currentUser ,hundleAuth} = useContext(BlogContext)
   return (
     <ul className="flex justify-around gap-2">
-      <li>
+      <li  className='self-center'>
         <Link href="/Blog">
           <a>
             <h3>Home</h3>
           </a>
         </Link>
       </li>
-      <li>
+      <li  className='self-center'>
         <Link href="/Blog">
           <a>
             <h3>Blog</h3>
           </a>
         </Link>
       </li>
-      <li>
-        <Link href="/Contact">
-          <a>
+      <li  className='self-center'>
+          <a href="#Contact">
             <h3>Contact</h3>
           </a>
-        </Link>
       </li>
       {!currentUser ? <li onClick={hundleAuth}>
         sign in 
       </li>: <>
               <li className="underline">you're logged in</li>
               <Link href="/?addNew=1">
-               <li>write</li>
+               <li  className='self-center'>write</li>
               </Link> 
              </>
       }

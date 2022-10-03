@@ -2,7 +2,7 @@ import Link from 'next/link'
 const Navbar = () => {
   return (
     
-      <ul className="Navbar">
+      <ul className="Navbar flex justify-around">
       <li>
         <Link href="/Recycle">
           <a>

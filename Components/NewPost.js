@@ -16,14 +16,14 @@ const NewPost = () => {
    await addDoc(collection(db, 'Articles'), newPost)
   }
   return (
-    <form onSubmit={submitPost}>
+    <form onSubmit={submitPost} className='p-5 w-full'>
       <div>
          <label>Title</label>
-         <input type="text" onChange={(e)=> setNewPost({...newPost, title : e.target.value})} />
+         <input className="w-full" type="text" onChange={(e)=> setNewPost({...newPost, title : e.target.value})} />
       </div>
       <div>
          <label>brief</label>
-         <input type="text" onChange={(e)=> setNewPost({...newPost, brief : e.target.value})} />
+         <input className="w-full" type="text" onChange={(e)=> setNewPost({...newPost, brief : e.target.value})} />
       </div>
       <div>
          <label>text</label>
