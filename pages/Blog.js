@@ -5,7 +5,7 @@ import { useContext } from 'react'
 
 const Blog = () => {
   const {posts, users} = useContext(BlogContext)
-  //console.log(posts, users)
+  console.log(posts, users)
   return (
     <div>
       <Link href="/">
@@ -13,12 +13,13 @@ const Blog = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>العودة للصفحة الرئيسية</a>
       </Link>
+      <div className="flex flex-wrap -mb-4 gap-2 p-4">
       {
         posts.map((post, index) =>
-        <PostCard key={post.id} index={post.id} post={post.data} />
+        <PostCard key={post.id} index={post.id} post={post.data} users={users}/>
         )
       }
-      
+      </div>
     </div>
   )
 }

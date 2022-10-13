@@ -1,19 +1,48 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { BlogContext } from '../Context/BlogContext';
-import { collection, addDoc } from 'firebase/firestore'
-import { db } from '../firebase'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { db, storage } from '../firebase'
+import { ref, uploadBytes, getDownloadURL, listAll  } from 'firebase/storage'
+
 const NewPost = () => {
   const {currentUser} = useContext(BlogContext);
+  const [image, setImage] = useState(null)
+  const reference = ref(storage)
+  const [imageUrl, setImageUrl] = useState('')
+  const uploadImage= () =>{
+   if(!image)return;
+   const imageRef = ref(storage, `${image?.name.replace(/\s+/g, '')}`)
+   alert('Uploading', imageRef)
+   uploadBytes(imageRef, image).then((re) => {
+      getDownloadURL(re.ref)
+      .then((url) => {
+      setNewPost((prev)=>({...prev, bannerImage : url}))
+      alert(newPost.bannerImage + 'is a b******')
+  })
+   })
+  }
   const [newPost, setNewPost] = useState({
-   name: currentUser.displayName,
+   name: currentUser?.displayName,
    title: '',
    body: '',
    category: '',
+   bannerImage:'',
+   createdAt: serverTimestamp()
   })
+  const clear = () => {
+   setNewPost({
+      name: currentUser?.displayName,
+      title: '',
+      body: '',
+      category: '',
+      bannerImage:''
+   })
+  }
   const submitPost = async (e) =>{
    e.preventDefault();
-   console.log(newPost)
+   uploadImage()
    await addDoc(collection(db, 'Articles'), newPost)
+   clear()
   }
   return (
     <form onSubmit={submitPost} className='p-5 w-full'>
@@ -32,10 +61,15 @@ const NewPost = () => {
       
       <div>
          <label>category</label>
-         <select onSelect={(e)=> setNewPost({...newPost, category : e.target.value})}>
+         <select onChange={(e)=> setNewPost({...newPost, category : e.target.value})}>
           <option value="recycle">Recycle</option>
           <option value="event">Event</option>
          </select>
+      </div>
+      <div>
+         <input type="file" onChange={
+            (e) => {setImage(e.target.files[0])
+            uploadImage}}/>
       </div>
       <button type="submit">Post</button>
     </form>

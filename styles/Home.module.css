@@ -123,7 +123,7 @@
   .code {
     background: #111;
   }
-  .logo img {
+  .logo Image{
     filter: invert(1);
   }
 }
